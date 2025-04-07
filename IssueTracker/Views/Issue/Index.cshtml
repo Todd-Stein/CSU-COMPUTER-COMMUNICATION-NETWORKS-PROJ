@@ -1,0 +1,28 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Issue Maker";
+}
+
+@model IssueModel
+<div class="text-center">
+    
+    <h1 class="display-1">Create an issue for: *PUT PROJECT NAME HERE*</h1>
+    
+    @using (Html.BeginForm("Success", "Issue", FormMethod.Post))
+    {
+        <div>
+            <label>Issue Name:</label>
+            <input type="text" name="Issue Name:" asp-for="Name" maxlength="250"/>
+        </div>
+        <div>
+            <label>Issue Description:</label>
+            <input type="text" name="Issue Description:" asp-for="Description" maxlength="250"/>
+        </div>
+        //<input type="checkbox" name="Users" asp-for="UserIds" class="btn-check" value="1 -- Dummy User 0"/>
+        //<input type="checkbox" name="Users" asp-for="UserIds" class="btn-check" value="2 -- Dummy User 1" />
+        //<input type="checkbox" name="Users" asp-for="UserIds" class="btn-check" value="2 -- Dummy User 2" />
+        <button type="submit" class="btn btn-primary">Submit</button>
+    }
+</div>
