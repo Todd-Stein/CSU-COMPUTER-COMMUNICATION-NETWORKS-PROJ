@@ -1,0 +1,65 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Create Issue";
+    //List<int> issueNums = TempStorage.ProjectStorage[ViewBag.CurrentProj].ProjectIssues;
+    //var issuesList = issueNums.Where(k => TempStorage.IssueStorage.ContainsKey(k))
+    //.Select(k => TempStorage.IssueStorage[k])
+    //.ToList();
+}
+@model int
+<div class="text-center">
+
+    <h1 class="display-1">Edit an issue For Project "@TempStorage.ProjectStorage.ElementAt(@Model).Value.Name".</h1>
+</div>
+<div>
+    <ol class="list-group">
+    @foreach(var i in TempStorage.ProjectStorage[Model].ProjectIssues)
+    {
+        
+            <li class="list-group-item">@i</li>
+            @* <li class="list-group-item">
+                Issue ID:   @i.Id
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        Issue Name: @i.Name
+                    </li>
+                    <li class="list-group-item">
+                        Issue Description:   @i.Description
+                    </li>
+                    <ul class="list-group">
+                        Project Leads:
+                        @foreach (var userId in i.UserIds)
+                        {
+                            <li class="list-group-item">
+                                @userId.ToString()
+                            </li>
+                        }
+                    </ul>
+                </ul>
+            </li> *@
+        
+    }
+    </ol>
+    @* @using (Html.BeginForm("IssueToEdit", "Issue", FormMethod.Post, new { @class = "col-md-7 col-lg-8" }))
+    {
+        <div class="col-sm-6">
+            @Html.LabelFor(i => newIssue.Name, "Name", new { @class = "form-label" })
+            @Html.TextBox("Name", "Issue Name", new { @class = "form-control" })
+        </div>
+        <div class="col-sm-6">
+            @Html.LabelFor(i => newIssue.Description, "Description", new { @class = "form-label" })
+            @Html.TextBox("Description", "Issue Description", new { @class = "form-control" })
+        </div>
+        <div class="col-md-4">
+            @Html.LabelFor(i => newIssue.UserIds, "User IDs", new { @class = "form-label" })
+            @Html.DropDownList("UserIds", UserList, new { @class = "form-select", @multiple = "multiple" })
+        </div>
+        <div>
+            @Html.LabelFor(i => newIssue.AssociatedFiles)
+            @Html.TextBox("File Names")
+        </div>
+
+    } *@
+</div>

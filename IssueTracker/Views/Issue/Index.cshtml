@@ -5,60 +5,30 @@
     ViewData["Title"] = "Issue Maker";
 }
 
-@model List<IssueModel>
+@*@model List<IssueModel>*@
 
 @{
     var newIssue = new IssueModel();
     var UserList = new SelectList(TempStorage.tempUserIdStorage);
     var activeUserList = new List<int>();
-    var projectIdList = new SelectList(TempStorage.ProjectStorage.Select(val => (val.Key, val.Value.Name)).ToList());
+    var projectIdList = TempStorage.ProjectStorage.Select(val => new SelectListItem
+    {
+        Value = val.Key.ToString(),
+        Text = val.Key.ToString()+" - "+val.Value.Name
+    });
 }
 <div class="text-center">
 
     <h1 class="display-1">Create an issue.</h1>
-    <ol class="list-group">
-        @foreach (var issue in Model)
-        {
-            @if(issue.Status == IssueStatus.ToBeAssigned || issue.Status==IssueStatus.CurrentlyWorkedOn) 
-            {
-                <li class="list-group-item">
-                    Issue ID:   @issue.Id
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                            @issue.ProjectId.Item1.ToString() -- @issue.ProjectId.Item2.ToString()
-                        </li>
-                        <li class="list-group-item">
-                            Issue Name: @issue.Name
-                        </li>
-                        <li class ="list-group-item">
-                           Issue Description:   @issue.Description
-                        </li>
-                        <ul class="list-group">
-                        @foreach (var userId in issue.UserIds)
-                        {
-                            <li class="list-group-item">
-                                @userId.ToString()
-                            </li>
-                        }
-                        </ul>
-                        <li class="list-group-item">
-                            @issue.AssociatedFiles
-                        </li>
-                        <li class="list-group-item">
-                            Issue Status:   @issue.Status.ToString()
-                        </li>
-                    </ul>
-                </li>   
-            }
-        }
-    </ol>
-    @using (Html.BeginForm("IssueEntry", "Issue", FormMethod.Post, new {@class="col-md-7 col-lg-8"}))
+</div>
+<div>
+    @using (Html.BeginForm("IssueToDo", "Issue", FormMethod.Post, new {@class="col-md-7 col-lg-8"}))
     {
-        <div class="col-md-12">
-            @Html.LabelFor(i => newIssue.ProjectId, "Project ID", new {@class="form-label"});
-            @Html.DropDownList("ProjectId", projectIdList, new {@class="form-select"});
+        <div>
+            @Html.Label("projectId", "Project ID", new { @class = "form-label" })
+            @Html.DropDownList("projectId", projectIdList, new {@class="form-select"})
         </div>
-        <div class="col-sm-6">
+        @* <div class="col-sm-6">
             @Html.LabelFor(i => newIssue.Name, "Name", new {@class="form-label"})
             @Html.TextBox("Name", "Issue Name", new {@class="form-control"})
         </div>
@@ -73,10 +43,43 @@
         <div>
             @Html.LabelFor(i => newIssue.AssociatedFiles)
             @Html.TextBox("File Names")
-        </div>
+        </div> *@
         //<input type="checkbox" name="Users" asp-for="UserIds" class="btn-check" value="1 -- Dummy User 0"/>
         //<input type="checkbox" name="Users" asp-for="UserIds" class="btn-check" value="2 -- Dummy User 1" />
         //<input type="checkbox" name="Users" asp-for="UserIds" class="btn-check" value="2 -- Dummy User 2" />
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    @if (projectIdList.Count() > 0)
+                    {
+                        <button type="submit" class="btn btn-primary" name="whattodo" value="create">Create New Issue</button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn btn-dark-outline" name="whattodo" value="create" disabled>Create New Issue</button>
+                    }
+                </div>
+                <div class="col">
+                    @if (projectIdList.Count() > 0)
+                    {
+                        <button type="submit" class="btn btn-primary" name="whattodo" value="edit">Edit Issues</button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn btn-dark-outline" name="whattodo" value="edit" disabled>Edit Issues</button>
+                    }
+                </div>
+                <div class="col">
+                    @if (projectIdList.Count() > 0) 
+                    {
+                        <button type="submit" class="btn btn-primary" name="whattodo" value="delete">Delete Issues</button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn btn-dark-outline" name="whattodo" value="delete" disabled>Delete Issues</button>
+                    }
+                </div>
+            </div>
+        </div>
     }
 </div>

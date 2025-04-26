@@ -10,7 +10,6 @@ namespace IssueTracker.Models
     }
     public class IssueModel
     {
-        public (int, string) ProjectId { get; set; }
         [Required, MaxLength(200)]
         public string Name { get; set; } = String.Empty;
         [MaxLength(2000)]

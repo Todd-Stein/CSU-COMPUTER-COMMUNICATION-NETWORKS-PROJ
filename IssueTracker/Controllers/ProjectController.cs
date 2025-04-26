@@ -19,14 +19,14 @@ namespace IssueTracker.Controllers
             {
                 var project = TempStorage.ProjectStorage;
                 proj.Id = _id++;
-                if (proj.ProjectMemberIDs.Count > 0)
+                /*if (proj.ProjectMemberIDs.Count > 0)
                 {
                     Console.WriteLine("not empty");
                 }
                 else
                 {
                     Console.WriteLine("empty");
-                }
+                }*/
                     TempStorage.ProjectStorage.Add(proj.Id, proj);
                 return RedirectToAction("Index");
             }

@@ -14,7 +14,7 @@ namespace IssueTracker.Models
         public List<int> ProjectLeadIDs { get; set; } = new List<int>();
         [Required]
         public List<int> ProjectMemberIDs { get; set; } = new List<int>();
-        public List<IssueModel> ProjectIssues { get; set; } = new List<IssueModel>();
+        public List<int> ProjectIssues { get; set; } = new List<int>();
 
         public string GithubProjectLink { get; set; } = string.Empty;
     }

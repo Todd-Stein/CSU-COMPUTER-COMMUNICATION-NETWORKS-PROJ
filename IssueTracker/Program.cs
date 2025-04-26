@@ -27,6 +27,9 @@ app.MapControllerRoute(
     name: "IssueMaker",
     pattern: "{controller=Issue}/{action=Index}/");
 app.MapControllerRoute(
+    name: "CreateIssue",
+    pattern: "{cotroller=Issue}/{action=Index}/{id?}");
+app.MapControllerRoute(
     name: "ProjectMaker",
     pattern: "{controller=Project}/{action=Index}/");
 

@@ -9,28 +9,61 @@ namespace IssueTracker.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var issueList = TempStorage.IssueStorage;
-            Console.WriteLine("Get request");
-            return View(issueList);
+            //var issueList = TempStorage.IssueStorage;
+            //Console.WriteLine("Get request");
+            return View();
         }
         [HttpPost]
-        public ActionResult IssueEntry(IssueModel issue)
+        public ActionResult IssueToDo(string whattodo, string projectId)
         {
+            Console.WriteLine("action:\t"+whattodo);
+            Console.WriteLine("id:\t" + projectId);
+            switch (whattodo)
+            {
+                case "create":
+                    return View("CreateIssue", Int32.Parse(projectId));
+                    break;
+                case "delete":
+                    View("DeleteIssue", projectId);
+                    break;
+                case "edit":
+                    return View("EditIssue", Int32.Parse(projectId));
+                    break;
+                default:
+                    RedirectToAction("Index");
+                    break;
+            }
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public ActionResult IssueCreate(IssueModel newIssue, string projId)
+        {
+            newIssue.Id = _id++;
+            if (newIssue.UserIds.Count > 0)
+            {
+                newIssue.Status = IssueStatus.CurrentlyWorkedOn;
+            }
+            else
+            {
+                newIssue.Status = IssueStatus.ToBeAssigned;
+            }
+            
             if (ModelState.IsValid)
             {
-                issue.Id = _id++;
-                if (issue.UserIds.Count()<=0)
+                Console.WriteLine("Valid");
+                ProjectModel proj = TempStorage.ProjectStorage[Int32.Parse(projId)];
+
+                proj.ProjectIssues.Add(newIssue.Id);
+                TempStorage.IssueStorage.Add(newIssue.Id, newIssue);
+                Console.WriteLine("Make issue");
+                foreach (var p in proj.ProjectIssues)
                 {
-                    issue.Status = IssueStatus.ToBeAssigned;
+                    Console.WriteLine(p);
                 }
-                else
-                {
-                    issue.Status = IssueStatus.CurrentlyWorkedOn;
-                }
-                TempStorage.IssueStorage.Add(issue.Id, issue);
-                return RedirectToAction("Index");
+                return View("EditIssue", ViewBag.CurrentProj);
             }
-            return View(TempStorage.IssueStorage);
+            Console.WriteLine("invalid");
+            return View("Index");
         }
         /*public IActionResult Success()
         {
