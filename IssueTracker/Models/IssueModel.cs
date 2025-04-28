@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IssueTracker.Models
 {
@@ -8,6 +9,7 @@ namespace IssueTracker.Models
         CurrentlyWorkedOn,
         Completed
     }
+    [Table("Issue")]
     public class IssueModel
     {
         [Required, MaxLength(200)]
@@ -17,7 +19,7 @@ namespace IssueTracker.Models
         public int Id { get; set; }
         public IssueStatus Status { get; set; } = IssueStatus.CurrentlyWorkedOn;
         public List<int> UserIds { get; set; } = new List<int>();
-        [Required]
+       // [Required]
         public string AssociatedFiles { get; set; } = String.Empty;
     }
 }

@@ -1,0 +1,36 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Delete Project";
+    //var projectsList = TempStorage.ProjectStorage.ToList();
+}
+@model List<ProjectModel>
+<div class="text-center">
+
+    <h1 class="display-1">Delete Project.</h1>
+</div>
+<div>
+    @using (Html.BeginForm("ProjectToDelete", "Project", FormMethod.Post, new { @class = "col-md-7 col-lg-8" }))
+    {
+        <ol class="list-group">
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <li class="list-group-item">
+                    Issue ID:   @Model[i].Id
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            Issue Name: @Model[i].Name
+                        </li>
+                        <li class="list-group-item">
+                            Issue Description: @Model[i].Description
+                        </li>
+                    </ul>
+                    <button type="submit" class="btn btn-danger" name="projectId" value="@Model[i].Id">Delete</button>
+                </li>
+
+            }
+        </ol>
+
+    }
+</div>

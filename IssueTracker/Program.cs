@@ -1,9 +1,28 @@
+using IssueTracker.Data;
+using IssueTracker.Models;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+/*string DbPath = "issuedb.db";
+var db = new IssueContext();
+db.Database.EnsureCreated();
+db.Add(new IssueModel { Name = "issue test", Description = "test description", Id = 0 });
+await db.SaveChangesAsync();*/
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddDbContext<IssueContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 var app = builder.Build();
+
+/*using (var scope = app.Services.CreateScope())
+{
+    var dbCtx = scope.ServiceProvider.GetRequiredService<IssueContext>();
+    dbCtx.Database.Migrate();
+}*/
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

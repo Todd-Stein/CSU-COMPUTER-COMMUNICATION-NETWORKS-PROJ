@@ -5,48 +5,36 @@
     ViewData["Title"] = "Issue Maker";
 }
 
-@*@model List<IssueModel>*@
+@model List<(int, string)>
 
 @{
     var newIssue = new IssueModel();
     var UserList = new SelectList(TempStorage.tempUserIdStorage);
     var activeUserList = new List<int>();
-    var projectIdList = TempStorage.ProjectStorage.Select(val => new SelectListItem
-    {
-        Value = val.Key.ToString(),
-        Text = val.Key.ToString()+" - "+val.Value.Name
-    });
+    //    var projectIdList = TempStorage.ProjectStorage.Select(val => new SelectListItem
+    //    {
+    //        Value = val.Key.ToString(),
+    //        Text = val.Key.ToString()+" - "+val.Value.Name
+    //    });
 }
 <div class="text-center">
 
     <h1 class="display-1">Create an issue.</h1>
 </div>
 <div>
+    @{
+        var projectIdList = Model.Select(val => new SelectListItem
+            {
+                Value = val.Item1.ToString(),
+                Text = val.Item1.ToString() + " - " + val.Item2
+            });
+    }
     @using (Html.BeginForm("IssueToDo", "Issue", FormMethod.Post, new {@class="col-md-7 col-lg-8"}))
     {
         <div>
             @Html.Label("projectId", "Project ID", new { @class = "form-label" })
             @Html.DropDownList("projectId", projectIdList, new {@class="form-select"})
         </div>
-        @* <div class="col-sm-6">
-            @Html.LabelFor(i => newIssue.Name, "Name", new {@class="form-label"})
-            @Html.TextBox("Name", "Issue Name", new {@class="form-control"})
-        </div>
-        <div class="col-sm-6">
-            @Html.LabelFor(i => newIssue.Description, "Description", new { @class = "form-label" })
-            @Html.TextBox("Description", "Issue Description", new { @class = "form-control" })
-        </div>
-        <div class="col-md-4">
-            @Html.LabelFor(i => newIssue.UserIds, "User IDs", new { @class = "form-label" })
-            @Html.DropDownList("UserIds", UserList, new {@class = "form-select", @multiple = "multiple"})
-        </div>
-        <div>
-            @Html.LabelFor(i => newIssue.AssociatedFiles)
-            @Html.TextBox("File Names")
-        </div> *@
-        //<input type="checkbox" name="Users" asp-for="UserIds" class="btn-check" value="1 -- Dummy User 0"/>
-        //<input type="checkbox" name="Users" asp-for="UserIds" class="btn-check" value="2 -- Dummy User 1" />
-        //<input type="checkbox" name="Users" asp-for="UserIds" class="btn-check" value="2 -- Dummy User 2" />
         <div class="container">
             <div class="row">
                 <div class="col">

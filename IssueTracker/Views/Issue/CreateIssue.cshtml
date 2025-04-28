@@ -7,15 +7,15 @@
 @model int
 
 @{
-    var UserList = new SelectList(TempStorage.ProjectStorage[Model].ProjectLeadIDs.ToList().Concat(TempStorage.ProjectStorage[Model].ProjectMemberIDs.ToList()));
-    var newIssue = new IssueModel();
+    var UserList = new SelectList(ViewBag.ProjectUsers);
+    IssueModel newIssue = new IssueModel();
 
 }
 @{
     ViewBag.CurrentProj = Model;
 }
 <div class="text-center">
-    <h1 class="display-1">Create an issue For Project "@TempStorage.ProjectStorage.ElementAt(@Model).Value.Name".</h1>
+    <h1 class="display-1">Create an issue For Project "@ViewBag.ProjectName".</h1>
 </div>
 
 <div>
@@ -33,10 +33,10 @@
             @Html.LabelFor(i => newIssue.UserIds, "User IDs", new { @class = "form-label" })
             @Html.DropDownList("UserIds", UserList, new {@class = "form-select", @multiple = "multiple"})
         </div>
-        <div>
-            @Html.LabelFor(i => newIssue.AssociatedFiles)
-            @Html.TextBox("AssociatedFiles", "File Names")
+        <div class="col-md-4">
+            @Html.LabelFor(i => newIssue.AssociatedFiles, "Associated Files", new { @class = "form-label" })
+            @Html.TextBox("AssociatedFiles", "File Names", new { @class = "form-control" })
         </div>
-        <button type="submit" class="btn btn-primary" name="projId" value="@Model.ToString()">Create</button>
+        <button type="submit" class="btn btn-primary" name="projId" value=@Model.ToString()>Create</button>
     }
 </div>

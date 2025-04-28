@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IssueTracker.Models
 {
+    [Table("Project")]
     public class ProjectModel
     {
         public int Id { get; set; }

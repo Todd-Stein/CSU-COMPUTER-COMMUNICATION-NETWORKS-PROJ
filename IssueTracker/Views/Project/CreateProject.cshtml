@@ -1,0 +1,42 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Create Project";
+}
+@model ProjectModel
+
+@{
+    var UserList = new SelectList(TempStorage.tempUserIdStorage);
+    var newProject = new ProjectModel();
+
+}
+@* @{
+    ViewBag.CurrentProj = Model;
+} *@
+<div class="text-center">
+    <h1 class="display-1">Create Project.</h1>
+</div>
+
+<div>
+    @using (Html.BeginForm("ProjectCreate", "Project", FormMethod.Post, new { @class = "col-md-7 col-lg-8" }))
+    {
+        <div class="col-sm-6">
+            @Html.LabelFor(p => p.Name, "Name", new { @class = "form-label" })
+            @Html.TextBox("Name", "Project Name", new { @class = "form-control" })
+        </div>
+        <div class="col-sm-6">
+            @Html.LabelFor(p => p.Description, "Description", new { @class = "form-label" })
+            @Html.TextBox("Description", "Project Description", new { @class = "form-control" })
+        </div>
+        <div class="col-md-4">
+            @Html.LabelFor(p => p.ProjectLeadIDs, "Project Lead IDs", new { @class = "form-label" })
+            @Html.DropDownList("ProjectLeadIDs", UserList, new { @class = "form-select", @multiple = "multiple" })
+        </div>
+        <div class="col-md-4">
+            @Html.LabelFor(p => p.ProjectMemberIDs, "Project Member IDs", new { @class = "form-label" })
+            @Html.DropDownList("ProjectMemberIDs", UserList, new { @class = "form-select", @multiple = "multiple" })
+        </div>
+        <button type="submit" class="btn btn-primary">Create</button>
+    }
+</div>

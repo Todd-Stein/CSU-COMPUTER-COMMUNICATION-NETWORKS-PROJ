@@ -8,81 +8,26 @@
 @model List<ProjectModel>
 
 @{
-    var newProject = new ProjectModel();
-    var UserList = new SelectList(TempStorage.tempUserIdStorage);
-    var activeUserList = new List<int>();
 }
-<div class="text-center">
+@* <div class="text-center">
 
     <h1 class="display-1">Create a new project.</h1>
-    <ol class="list-group">
-        @foreach (var project in Model)
-        {
-            <li class="list-group-item">
-                Project ID:   @project.Id
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        Project Name: @project.Name
-                    </li>
-                    <li class="list-group-item">
-                        Project Description:   @project.Description
-                    </li>
-                    <ul class="list-group">
-                        Project Leads:
-                        @foreach (var userId in project.ProjectLeadIDs)
-                        {
-                            <li class="list-group-item">
-                                @userId.ToString()
-                            </li>
-                        }
-                    </ul>
-                    <ul class="list-group">
-                        Project Members:
-                        @foreach (var userId in project.ProjectMemberIDs)
-                        {
-                            <li class="list-group-item">
-                                @userId.ToString()
-                            </li>
-                        }
-                    </ul>
-                    @* <ul class="list-group">
-                        Active Issues:
-                        @foreach (var issue in project.ProjectIssues)
-                        {
-                            @if(issue.Status!=IssueStatus.Completed) 
-                            {
-                                <li class="list-group-item">
-                                    <a asp-controller="Issue" asp-action="SingleIssue" asp-route-id=@issue.Id>@issue.Name</a>
-                                </li>
-                            }
-                        }
-                    </ul> *@
-                </ul>
-            </li>
-        }
-    </ol>
-    @using (Html.BeginForm("ProjectEntry", "Project", FormMethod.Post, new { @class = "col-md-7 col-lg-8" }))
+</div> *@
+<div>
+    @using (Html.BeginForm("ProjectToDo", "Project", FormMethod.Post, new { @class = "col-md-7 col-lg-8" }))
     {
-        <div class="col-sm-6">
-            @Html.LabelFor(i => newProject.Name, "Name", new { @class = "form-label" })
-            @Html.TextBox("Name", "Project Name", new { @class = "form-control" })
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <button type="submit" class="btn btn-primary" name="whattodo" value="create">Create New Project</button>
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-primary" name="whattodo" value="edit">Edit Projects</button>
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-primary" name="whattodo" value="delete">Delete Projects</button>
+                </div>
+            </div>
         </div>
-        <div class="col-sm-6">
-            @Html.LabelFor(i => newProject.Description, "Description", new { @class = "form-label" })
-            @Html.TextBox("Description", "Project Description", new { @class = "form-control" })
-        </div>
-        <div class="col-md-4">
-            @Html.LabelFor(i => newProject.ProjectLeadIDs, "Project Lead IDs", new { @class = "form-label" })
-            @Html.DropDownList("ProjectLeadIDs", UserList, new { @class = "form-select", @multiple = "multiple" })
-        </div>
-        <div class="col-md-4">
-            @Html.LabelFor(i => newProject.ProjectMemberIDs, "Project Member IDs", new { @class = "form-label" })
-            @Html.DropDownList("ProjectMemberIDs", UserList, new { @class = "form-select", @multiple = "multiple" })
-        </div>
-        //<input type="checkbox" name="Users" asp-for="UserIds" class="btn-check" value="1 -- Dummy User 0"/>
-        //<input type="checkbox" name="Users" asp-for="UserIds" class="btn-check" value="2 -- Dummy User 1" />
-        //<input type="checkbox" name="Users" asp-for="UserIds" class="btn-check" value="2 -- Dummy User 2" />
-        <button type="submit" class="btn btn-primary">Submit</button>
     }
 </div>
-

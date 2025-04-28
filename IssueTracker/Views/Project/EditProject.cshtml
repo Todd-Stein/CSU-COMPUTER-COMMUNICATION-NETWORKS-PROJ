@@ -1,0 +1,58 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Edit Project";
+    //var projectsList = TempStorage.ProjectStorage.ToList();
+}
+@model List<ProjectModel>
+<div class="text-center">
+
+    <h1 class="display-1">Edit projects.</h1>
+</div>
+<div>
+    @using (Html.BeginForm("ProjectToEdit", "Project", FormMethod.Post, new { @class = "col-md-7 col-lg-8" }))
+    {
+        <ol class="list-group">
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <li class="list-group-item">
+                    Project ID:   @Model[i].Id
+                    @Html.HiddenFor(m => m[i].Id)
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            Project Name: @Html.TextBoxFor(m => m[i].Name)
+                        </li>
+                        <li class="list-group-item">
+                            Project Description: @Html.TextBoxFor(m => m[i].Description)
+                        </li>
+                        Users:
+                        <ul class="list-group">
+                            Lead Users:
+                            @foreach (var userId in Model[i].ProjectLeadIDs)
+                            {
+                                <li class="list-group-item">
+                                    @userId.ToString()
+                                </li>
+                                
+                            }
+                            @Html.HiddenFor(m => m[i].ProjectLeadIDs)
+                        </ul>
+                        <ul class="list-group">
+                            Member Users:
+                            @foreach (var userId in Model[i].ProjectMemberIDs)
+                            {
+                                <li class="list-group-item">
+                                    @userId.ToString()
+                                </li>
+                            }
+                            @Html.HiddenFor(m => m[i].ProjectMemberIDs)
+                        </ul>
+                    </ul>
+                </li>
+
+            }
+        </ol>
+        <button type="submit" class="btn btn-primary">Update</button>
+    }
+</div>
