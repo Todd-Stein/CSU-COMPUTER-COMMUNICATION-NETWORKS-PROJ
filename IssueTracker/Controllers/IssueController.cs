@@ -34,7 +34,7 @@ namespace IssueTracker.Controllers
             List<IssueModel> issueList = _ctx.Issues
                 .Where(e => proj.ProjectIssues.Contains(e.Id))
                 .ToList();
-            Console.WriteLine(issueList[0].Name);
+            //Console.WriteLine(issueList[0].Name);
             if (proj != null)
             {
                 switch (whattodo)
@@ -74,6 +74,7 @@ namespace IssueTracker.Controllers
             {
                 //ProjectModel proj = TempStorage.ProjectStorage[Int32.Parse(projId)];
                 _ctx.Issues.Add(newIssue);
+                await _ctx.SaveChangesAsync();
                 var newList = _ctx.Projects.Find(Int32.Parse(projId));
                 ViewBag.ProjectName = newList.Name;
                 newList.ProjectIssues.Add(newIssue.Id);
@@ -94,7 +95,7 @@ namespace IssueTracker.Controllers
                 ViewBag.CurrentProj = Int32.Parse(projId);
                 return View("EditIssue", issueList);
             }
-            return View("Index");
+            return RedirectToAction("Index");
         }
         [HttpPost]
         public async Task<ActionResult> IssueToEdit(List<IssueModel> issuesList, string projId)
@@ -105,20 +106,20 @@ namespace IssueTracker.Controllers
                 ViewBag.CurrentProj = Int32.Parse(projId);
                 foreach (var i in issuesList)
                 {
-                    foreach (var issue in issuesList)
-                    {
+                   // foreach (var issue in issuesList)
+                    //{
                         await _ctx.Issues
-                            .Where(p => p.Id == Int32.Parse(projId))
+                            .Where(p => p.Id == i.Id)
                             .ExecuteUpdateAsync(p => p
-                            .SetProperty(f => f.Name, issue.Name)
-                            .SetProperty(f => f.Description, issue.Description));
-                    }
+                            .SetProperty(f => f.Name, i.Name)
+                            .SetProperty(f => f.Description, i.Description));
+                    //}
                     await _ctx.SaveChangesAsync();
                     Console.WriteLine(i.Name);
                 }
                 Console.WriteLine("valid");
             //}
-            return View("Index");
+            return RedirectToAction("Index");
         }
         [HttpPost]
         public async Task<ActionResult> IssueToDelete(string issueProjId)
@@ -126,7 +127,9 @@ namespace IssueTracker.Controllers
             if (ModelState.IsValid)
             {
                 string projId = issueProjId.Split(',')[0];
+                Console.WriteLine(projId);
                 string issueId = issueProjId.Split(',')[1];
+                
                 ViewBag.CurrentProj = Int32.Parse(projId);
                 //bool exist = _ctx.Issues.Any(i => i.Id == int.Parse(issueId));
                 var issue = _ctx.Issues.Find(Int32.Parse(issueId));
@@ -147,7 +150,7 @@ namespace IssueTracker.Controllers
                 }*/
 
             }
-            return View("Index");
+            return RedirectToAction("Index");
         }
     }
 }

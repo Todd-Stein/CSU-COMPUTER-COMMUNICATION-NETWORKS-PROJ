@@ -32,7 +32,7 @@
                     @{
                         var val = ViewBag.CurrentProj.ToString() + "," + Model[i].Id.ToString();
                     }
-                    <button type="submit" class="btn btn-danger" name="issueProjId" value=val>Delete</button>
+                    <button type="submit" class="btn btn-danger" name="issueProjId" value=@val>Delete</button>
                 </li>
 
             }
