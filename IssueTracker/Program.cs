@@ -1,5 +1,6 @@
 using IssueTracker.Data;
 using IssueTracker.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,12 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<IssueContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<IssueContext>();
+/*builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<IssueContext>()
+    .AddDefaultTokenProviders();*/
+
 
 var app = builder.Build();
 
@@ -37,6 +44,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
@@ -51,5 +59,7 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "ProjectMaker",
     pattern: "{controller=Project}/{action=Index}/");
+
+app.MapRazorPages();
 
 app.Run();

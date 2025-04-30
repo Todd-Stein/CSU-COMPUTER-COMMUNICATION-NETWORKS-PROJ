@@ -1,5 +1,6 @@
 ﻿using IssueTracker.Data;
 using IssueTracker.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace IssueTracker.Controllers
 {
+    [Authorize]
     public class ProjectController : Controller
     {
         private static int _id = 0;
@@ -26,6 +28,8 @@ namespace IssueTracker.Controllers
         public ActionResult ProjectToDo(string whattodo)
         {
             var projList = _ctx.Projects.ToList();
+            var userList = _ctx.Users.Select(u => u.Id).ToList();
+            ViewBag.UserList = userList;
             switch (whattodo)
             {
                 case "create":

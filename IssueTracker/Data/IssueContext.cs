@@ -1,9 +1,11 @@
 ﻿using IssueTracker.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace IssueTracker.Data
 {
-    public class IssueContext : DbContext
+    public class IssueContext : IdentityDbContext
     {
         public IssueContext(DbContextOptions<IssueContext> options) : base(options) { }
         public DbSet<IssueModel> Issues { get; set; }

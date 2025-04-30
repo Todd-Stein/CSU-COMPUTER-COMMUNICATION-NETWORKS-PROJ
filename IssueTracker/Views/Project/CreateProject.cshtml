@@ -7,7 +7,14 @@
 @model ProjectModel
 
 @{
-    var UserList = new SelectList(TempStorage.tempUserIdStorage);
+    //if (ViewBag.UserList != null)
+    //{
+        var UserList = new SelectList(ViewBag.UserList);
+    //}
+    //else
+    //{
+    //    var UserList = new SelectList();
+    //}
     var newProject = new ProjectModel();
 
 }

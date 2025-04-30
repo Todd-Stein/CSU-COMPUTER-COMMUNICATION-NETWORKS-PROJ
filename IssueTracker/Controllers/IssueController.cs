@@ -1,11 +1,13 @@
 ﻿using IssueTracker.Data;
 using IssueTracker.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace IssueTracker.Controllers
 {
+    [Authorize]
     public class IssueController : Controller
     {
         private readonly IssueContext _ctx;
@@ -34,6 +36,7 @@ namespace IssueTracker.Controllers
             List<IssueModel> issueList = _ctx.Issues
                 .Where(e => proj.ProjectIssues.Contains(e.Id))
                 .ToList();
+
             //Console.WriteLine(issueList[0].Name);
             if (proj != null)
             {
