@@ -1,0 +1,15 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Enter Personal Access Token";
+}
+@model string
+
+@using (Html.BeginForm("ChangeToken", "PersonalAccessToken", FormMethod.Post, new {@class="col-md-7 col-lg-8"}))
+    {
+        <div>
+            @Html.Label("Personal Access Token (**Note that for security reasons the token is only saved in memory andf won't persist between restarting the app**)")
+            @Html.TextBox(@Model, "Token")
+        </div>
+    }

@@ -1,0 +1,81 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Close Issue";
+//    List<int> issueNums = TempStorage.ProjectStorage[Model].ProjectIssues;
+//    var issuesList = issueNums.Where(k => TempStorage.IssueStorage.ContainsKey(k))
+//    .Select(k => TempStorage.IssueStorage[k])
+//    .ToList();
+}
+@model IssueCommitModel
+
+@{
+    var statusList = Enum.GetValues(typeof(IssueStatus))
+                        .Cast<IssueStatus>()
+                        .Select(s => new SelectListItem
+                        {
+                            Text = s.ToString(),
+                            Value = s.ToString()
+                        });
+
+        var commitList = new SelectList(Model.CommitData);
+    }
+}
+
+<div class="text-center">
+
+    <h1 class="display-1">Close an issue For Project "@ViewBag.ProjectName".</h1>
+</div>
+<div>
+    @using (Html.BeginForm("IssueToClose", "Issue", FormMethod.Post, new { @class = "col-md-7 col-lg-8" }))
+    {
+        <ol class="list-group">
+        @for(int i = 0; i<Model.Issues.Count; i++)
+        {
+                <li class="list-group-item">
+                    Issue ID:   @Model.Issues[i].Id
+                    @Html.HiddenFor(m => m.Issues[i].Id)
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            Issue Name: @Model.Issues[i].Name
+                            @Html.HiddenFor(m => m.Issues[i].Name)
+                        </li>
+                        <li class="list-group-item">
+                            Issue Description: @Model.Issues[i].Description)
+                            @Html.HiddenFor(m => m.Issues[i].Description)
+                        </li>
+                        <ul class="list-group">
+                            Users:
+                            @foreach (var userId in Model.Issues[i].UserIds)
+                            {
+                                <li class="list-group-item">
+                                    @userId.ToString()
+                                </li>
+                            }
+                            @Html.HiddenFor(m => m.Issues[i].UserIds)
+                        </ul>
+
+                        <li class="list-group-item">
+                            Status: @Html.DropDownListFor(m => m.Issues[i].Status, statusList)
+                        </li>
+                        <li class="list-group-item">
+                            Commit Info:    
+                            @if(Model.CommitData.Count>0) 
+                            {
+                                @Html.DropDownListFor(m => m.Issues[i].CommitInfo, commitList)
+                            }
+                            else 
+                            {
+                                @Html.TextBoxFor(m => m.Issues[i].CommitInfo)
+                            }
+                        </li>
+                        
+                    </ul>
+                </li> 
+        
+        }
+        </ol>
+        <button type="submit" class="btn btn-primary" name="projId" value=@ViewBag.CurrentProj.ToString()>Update</button>
+    }
+</div>

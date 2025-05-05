@@ -13,11 +13,12 @@ namespace IssueTracker.Models
         [MaxLength(2000)]
         public string Description { get; set; } = string.Empty;
         [Required]
-        public List<int> ProjectLeadIDs { get; set; } = new List<int>();
+        public List<string> ProjectLeadIDs { get; set; } = new List<string>();
         [Required]
-        public List<int> ProjectMemberIDs { get; set; } = new List<int>();
+        public List<string> ProjectMemberIDs { get; set; } = new List<string>();
         public List<int> ProjectIssues { get; set; } = new List<int>();
 
-        public string GithubProjectLink { get; set; } = string.Empty;
+        public string GithubAccountOwner { get; set; } = string.Empty;
+        public string GithubRepoName {  get; set; } = string.Empty;
     }
 }

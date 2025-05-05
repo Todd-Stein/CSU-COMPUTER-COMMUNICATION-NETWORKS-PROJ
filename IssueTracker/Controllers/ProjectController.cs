@@ -29,7 +29,9 @@ namespace IssueTracker.Controllers
         {
             var projList = _ctx.Projects.ToList();
             var userList = _ctx.Users.Select(u => u.Id).ToList();
-            ViewBag.UserList = userList;
+            var userNames = _ctx.Users.Select(u => u.UserName).ToList();
+            ViewBag.UserNameList = userNames;
+            ViewBag.UserIdList = userList;
             switch (whattodo)
             {
                 case "create":
@@ -116,6 +118,7 @@ namespace IssueTracker.Controllers
             //{
                 Console.WriteLine($"Project {projectId}");
                 var project = _ctx.Projects.Find(Int32.Parse(projectId));
+
                 if (project != null)
                 {
                     _ctx.Projects.Remove(project);

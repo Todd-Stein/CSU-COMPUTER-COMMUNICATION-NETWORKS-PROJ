@@ -13,5 +13,6 @@ namespace IssueTracker
             56,
             107
         };
+        public static string PersonalAccessToken;
     }
 }

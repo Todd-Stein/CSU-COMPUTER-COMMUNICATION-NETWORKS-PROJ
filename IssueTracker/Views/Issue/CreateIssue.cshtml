@@ -33,10 +33,10 @@
             @Html.LabelFor(i => newIssue.UserIds, "User IDs", new { @class = "form-label" })
             @Html.DropDownList("UserIds", UserList, new {@class = "form-select", @multiple = "multiple"})
         </div>
-        <div class="col-md-4">
+@*         <div class="col-md-4">
             @Html.LabelFor(i => newIssue.AssociatedFiles, "Associated Files", new { @class = "form-label" })
             @Html.TextBox("AssociatedFiles", "File Names", new { @class = "form-control" })
-        </div>
+        </div> *@
         <button type="submit" class="btn btn-primary" name="projId" value=@Model.ToString()>Create</button>
     }
 </div>

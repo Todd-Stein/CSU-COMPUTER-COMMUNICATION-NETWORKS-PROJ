@@ -67,6 +67,17 @@
                         <button type="submit" class="btn btn-dark-outline" name="whattodo" value="delete" disabled>Delete Issues</button>
                     }
                 </div>
+                <div class="col">
+                    @if (projectIdList.Count() > 0)
+                    {
+                        <button type="submit" class="btn btn-primary" name="whattodo" value="close">Close Issues</button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn btn-dark-outline" name="whattodo" value="close" disabled>Close Issues</button>
+                    }
+                </div>
+
             </div>
         </div>
     }

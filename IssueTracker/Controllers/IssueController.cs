@@ -1,5 +1,6 @@
 ﻿using IssueTracker.Data;
 using IssueTracker.Models;
+using IssueTracker.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +28,7 @@ namespace IssueTracker.Controllers
         [HttpPost]
         public async Task<ActionResult> IssueToDo(string whattodo, string projectId)
         {
+            //var userList = _ctx.Users.Select(u => u.Id).ToList();
             var proj = _ctx.Projects.Find(Int32.Parse(projectId));
             ViewBag.CurrentProj = Int32.Parse(projectId);
             ViewBag.ProjectName =_ctx.Projects.Find(ViewBag.CurrentProj).Name;
@@ -40,6 +42,18 @@ namespace IssueTracker.Controllers
             //Console.WriteLine(issueList[0].Name);
             if (proj != null)
             {
+                FetechGithubCommitsService fetechGithubCommitsService = new FetechGithubCommitsService();
+                IssueCommitModel issueCommitList = new IssueCommitModel();
+                var commitData = fetechGithubCommitsService.GetCommitDataAsync(proj.GithubAccountOwner, proj.GithubRepoName);
+                //if (!commitData.IsFaulted)
+                //{
+                    issueCommitList.CommitData = commitData.Result;
+                //}
+                /*else
+                {
+                    issueCommitList.CommitData = Enumerable.Empty<string>().ToList();
+                }*/
+                    issueCommitList.Issues = issueList;
                 switch (whattodo)
                 {
                     case "create":
@@ -50,6 +64,9 @@ namespace IssueTracker.Controllers
                         break;
                     case "edit":
                         return View("EditIssue", issueList);
+                        break;
+                    case "close":
+                        return View("CloseIssue", issueCommitList);
                         break;
                     default:
                         return RedirectToAction("Index");
@@ -152,6 +169,23 @@ namespace IssueTracker.Controllers
                     TempStorage.IssueStorage.Remove(Int32.Parse(issueId));
                 }*/
 
+            }
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public async Task<ActionResult> IssueToClose(IssueCommitModel issueCommitData, string projId)
+        {
+            int projectId = Int32.Parse(projId);
+            ViewBag.CurrentProj = projectId;
+            var IssueList = issueCommitData.Issues.ToList();
+            foreach (var issue in IssueList)
+            {
+                await _ctx.Issues
+                            .Where(p => p.Id == issue.Id)
+                            .ExecuteUpdateAsync(p => p
+                            .SetProperty(f => f.Status, issue.Status)
+                            .SetProperty(f => f.CommitInfo, issue.CommitInfo));
+                await _ctx.SaveChangesAsync();
             }
             return RedirectToAction("Index");
         }

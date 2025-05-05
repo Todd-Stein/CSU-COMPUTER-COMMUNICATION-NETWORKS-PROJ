@@ -18,8 +18,8 @@ namespace IssueTracker.Models
         public string Description { get; set; } = String.Empty;
         public int Id { get; set; }
         public IssueStatus Status { get; set; } = IssueStatus.CurrentlyWorkedOn;
-        public List<int> UserIds { get; set; } = new List<int>();
+        public List<string> UserIds { get; set; } = new List<string>();
        // [Required]
-        public string AssociatedFiles { get; set; } = String.Empty;
+        public string CommitInfo { get; set; } = String.Empty;
     }
 }

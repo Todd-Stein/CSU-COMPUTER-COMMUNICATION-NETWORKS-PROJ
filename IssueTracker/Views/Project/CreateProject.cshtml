@@ -9,7 +9,7 @@
 @{
     //if (ViewBag.UserList != null)
     //{
-        var UserList = new SelectList(ViewBag.UserList);
+    var UserList = new SelectList(ViewBag.UserIdList);
     //}
     //else
     //{
@@ -43,6 +43,14 @@
         <div class="col-md-4">
             @Html.LabelFor(p => p.ProjectMemberIDs, "Project Member IDs", new { @class = "form-label" })
             @Html.DropDownList("ProjectMemberIDs", UserList, new { @class = "form-select", @multiple = "multiple" })
+        </div>
+        <div class="col-md-4">
+            @Html.LabelFor(p => p.GithubAccountOwner, "Github Repo Account Holder Name", new { @class = "form-label" })
+            @Html.TextBox("GithubAccountOwner", "Author Name", new { @class = "form-control"})
+        </div>
+        <div class="col-md-4">
+            @Html.LabelFor(p => p.GithubRepoName, "Github Repo Name", new { @class = "form-label" })
+            @Html.TextBox("GithubRepoName", "Repo Name", new { @class = "form-control"})
         </div>
         <button type="submit" class="btn btn-primary">Create</button>
     }

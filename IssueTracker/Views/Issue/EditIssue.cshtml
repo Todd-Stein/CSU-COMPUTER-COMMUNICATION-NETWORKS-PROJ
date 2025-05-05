@@ -40,9 +40,12 @@
                             @Html.HiddenFor(m => m[i].UserIds)
                         </ul>
                         <li class="list-group-item">
-                            Associated Files: @Model[i].AssociatedFiles
+                            Commit Info: @Model[i].CommitInfo
                         </li>
-                        @Html.HiddenFor(m => m[i].AssociatedFiles)
+                        <li class="list-group-item">
+                            Status: @Model[i].Status.ToString()
+                        </li>
+                        @Html.HiddenFor(m => m[i].CommitInfo)
                     </ul>
                 </li> 
         

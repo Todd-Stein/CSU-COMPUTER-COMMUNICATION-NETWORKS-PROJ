@@ -3,6 +3,7 @@ using System;
 using IssueTracker.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IssueTracker.Migrations
 {
     [DbContext(typeof(IssueContext))]
-    partial class IssueContextModelSnapshot : ModelSnapshot
+    [Migration("20250430131203_ChangeIdType")]
+    partial class ChangeIdType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.4");
@@ -23,7 +26,7 @@ namespace IssueTracker.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("CommitInfo")
+                    b.Property<string>("AssociatedFiles")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -60,11 +63,7 @@ namespace IssueTracker.Migrations
                         .HasMaxLength(2000)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("GithubAccountOwner")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("GithubRepoName")
+                    b.Property<string>("GithubProjectLink")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
